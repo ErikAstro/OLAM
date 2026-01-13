@@ -1,4 +1,8 @@
  ovirt.ovirt.ovirt_vm_info:
+   
+   collections:
+    - ovirt.ovirt
+    
   register: result
 - ansible.builtin.debug:
     msg: "{{ result.ovirt_vms }}"
