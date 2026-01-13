@@ -9,7 +9,7 @@
 
   vars:
     vm_cluster_default: "Default"
-    vm_template_default: "olam-test"
+    vm_template_default: "OL8.10"
     vm_memory_default: "2GiB"
 
   tasks:
