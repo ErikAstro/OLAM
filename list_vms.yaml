@@ -1,5 +1,9 @@
 ---
--
+-name: Retreive liost of virtual machines
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  
 collections:
     - ovirt.ovirt
    
