@@ -1,0 +1,33 @@
+---
+- name: Create or start an OLVM virtual machine (simple)
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  collections:
+    - ovirt.ovirt
+
+  vars:
+    vm_cluster_default: "Default"
+    vm_template_default: "olam-test"
+    vm_memory_default: "2GiB"
+
+  tasks:
+    - name: Authenticate to OLVM using credential-injected environment
+      # Uses OVIRT_URL, OVIRT_USERNAME, OVIRT_PASSWORD, OVIRT_CAFILE
+      # provided by the "Oracle Linux Virtualization Manager" credential
+      ovirt_auth: {}
+
+    - name: Ensure VM exists and is running
+      ovirt_vm:
+        auth: "{{ ovirt_auth }}"   # <-- use the fact, not the registered result
+        name: "{{ vm_name }}"
+        cluster: "{{ vm_cluster | default(vm_cluster_default) }}"
+        template: "{{ vm_template | default(vm_template_default) }}"
+        state: running
+        memory: "{{ vm_memory | default(vm_memory_default) }}"
+
+    - name: Log out from OLVM API
+      ovirt_auth:
+        state: absent
+        ovirt_auth: "{{ ovirt_auth }}"
